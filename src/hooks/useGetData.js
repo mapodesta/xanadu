@@ -19,14 +19,14 @@ export default function useGetData() {
       console.log(data);
       setCountries(data);
     };
-    // const getSports = async () => {
-    //   const data = await axios(
-    //     "https://api.matchbook.com/edge/rest/lookups/sports"
-    //   );
-    //   console.log(data);
-    //   setSports(data);
-    // };
-    // getSports();
+    const getSports = async () => {
+      const data = await axios(
+        "https://api.matchbook.com/edge/rest/lookups/sports"
+      );
+      console.log(data);
+      setSports(data);
+    };
+    getSports();
     getCountries();
   }, []);
 
