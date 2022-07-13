@@ -1,3 +1,43 @@
-.main-content {
-  background-color: grey;
+.main-table {
+  margin-top: 2%;
+  width: 100%;
+}
+
+.main-table-date {
+  text-align: center;
+}
+
+.main-table-small-size {
+  font-size: 0.8rem;
+}
+
+.main-table-bold {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.main-table-tr {
+  background-color: rgb(232, 232, 232);
+}
+
+.main-table-td {
+  height: 50px;
+  padding: 0px 14px 0px 14px;
+}
+
+.main-table-td-rd {
+  background-color: rgb(234, 173, 176);
+  width: 8%;
+  text-align: center;
+}
+
+.main-table-td-ltb {
+  width: 8%;
+  background-color: rgb(163, 209, 239);
+  text-align: center;
+}
+
+.td-flex {
+  display: flex;
+  justify-content: space-between;
 }

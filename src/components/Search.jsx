@@ -3,8 +3,8 @@ import useGetData from "../hooks/useGetData";
 import "../styles/search.css";
 
 export default function Search() {
-  const { sports, countries } = useGetData();
-  console.log(sports, countries);
+  const { sports, countries, tree } = useGetData();
+
   const handleCountry = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -20,18 +20,20 @@ export default function Search() {
           defaultValue=""
         >
           <option hidden>Sport</option>
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="opel">Opel</option>
-          <option value="audi">Audi</option>
+          {sports.map((sprt) => (
+            <option value={sprt.name} key={sprt.id}>
+              {sprt.name}
+            </option>
+          ))}
         </select>
 
         <select name="country" className="select-style" defaultValue="">
           <option hidden>Country</option>
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="opel">Opel</option>
-          <option value="audi">Audi</option>
+          {countries.map((country) => (
+            <option value={country.name} key={country["country-id"]}>
+              {country.name}
+            </option>
+          ))}
         </select>
 
         <select name="competitions" className="select-style" defaultValue="">
