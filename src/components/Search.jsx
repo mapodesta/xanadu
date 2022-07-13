@@ -3,7 +3,7 @@ import useGetData from "../hooks/useGetData";
 import "../styles/search.css";
 
 export default function Search() {
-  const { sports, countries, tree } = useGetData();
+  const { sports, countries } = useGetData();
 
   const handleCountry = (e) => {
     e.preventDefault();
