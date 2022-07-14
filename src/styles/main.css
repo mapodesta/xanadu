@@ -27,13 +27,15 @@
 
 .main-table-td-rd {
   background-color: rgb(234, 173, 176);
-  width: 8%;
-  text-align: center;
 }
 
 .main-table-td-ltb {
-  width: 8%;
   background-color: rgb(163, 209, 239);
+}
+
+.main-table-td-ltb,
+.main-table-td-rd {
+  width: 8%;
   text-align: center;
 }
 

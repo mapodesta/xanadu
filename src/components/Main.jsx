@@ -1,8 +1,8 @@
-import React from "react";
-import useEvents from "../hooks/useEvents";
+import React, { useContext } from "react";
+import AppContext from "../context/AppContext";
 import "../styles/main.css";
 export default function Main() {
-  const { allEvents } = useEvents();
+  const { state } = useContext(AppContext);
 
   const handleEvent = () => {
     console.log("first");
@@ -18,7 +18,7 @@ export default function Main() {
           <th colSpan={2}>Draw</th>
           <th colSpan={2}>Away Team</th>
         </tr>
-        {allEvents.map((evnt) => {
+        {state?.events?.map((evnt) => {
           return (
             <tr className="main-table-tr" onClick={handleEvent} key={evnt.id}>
               <td className="main-table-td">
