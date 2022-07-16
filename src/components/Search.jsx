@@ -5,8 +5,13 @@ import "../styles/search.css";
 
 export default function Search() {
   const { tree } = useGetData();
-  const { filterEvents, filterByCountry, filterByCompetition } =
-    useContext(AppContext);
+  const {
+    filterEvents,
+    filterByCountry,
+    filterByCompetition,
+    sortByVolume,
+    sortByDate,
+  } = useContext(AppContext);
   const [competitions, setCompetitions] = useState([]);
   const [sportId, setSportId] = useState();
   const [countries, setCountries] = useState([]);
@@ -50,6 +55,10 @@ export default function Search() {
     setActualFilters({ ...actualFilters, competition: e.target.value });
     filterByCompetition(sportId, actualFilters, e.target.value);
   };
+
+  // useEffect(() => {
+  //   console.log(actualFilters);
+  // }, [actualFilters]);
 
   return (
     <div className="search-content">
@@ -104,8 +113,12 @@ export default function Search() {
       </div>
       <div className="search-sorters">
         <span>Sort By</span>
-        <button className="search-button">Start Time</button>
-        <button className="search-button">Volume</button>
+        <button className="search-button" onClick={sortByDate}>
+          Start Time
+        </button>
+        <button className="search-button" onClick={sortByVolume}>
+          Volume
+        </button>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 .main-table {
   margin-top: 2%;
   width: 100%;
+  overflow-x: auto;
 }
 
 .main-table-date {
@@ -42,4 +43,11 @@
 .td-flex {
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 500px) {
+  .main-table {
+    display: grid;
+    margin-top: 5%;
+  }
 }

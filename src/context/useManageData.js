@@ -8,13 +8,15 @@ const useManageData = () => {
   };
 
   const [state, setState] = useState(initialState);
+  const [asc, setAsc] = useState(true);
+  const [timeAsc, setTimeAsc] = useState(true);
 
   useEffect(() => {
     const getAllEvents = async () => {
       const data = await axios(
         `/edge/rest/events?offset=0&per-page=20&&after=${Math.floor(
           Date.now() / 1000
-        )}&states=open%2Csuspended%2Cclosed%2Cgraded&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&exclude-mirrored-prices=false`,
+        )}&states=open%2Csuspended%2Cclosed%2Cgraded&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&markets-limit=1&exclude-mirrored-prices=false`,
         {
           headers: {
             Accept: "application/json; charset=utf-8",
@@ -90,7 +92,40 @@ const useManageData = () => {
     });
   };
 
-  return { filterEvents, filterByCountry, filterByCompetition, state };
+  const sortByVolume = () => {
+    asc
+      ? setState({
+          events: state.events.sort((a, b) => a.volume - b.volume),
+        })
+      : setState({
+          events: state.events.sort((a, b) => b.volume - a.volume),
+        });
+    setAsc(!asc);
+  };
+
+  const sortByDate = () => {
+    timeAsc
+      ? setState({
+          events: state.events.sort(
+            (a, b) => new Date(a.start) - new Date(b.start)
+          ),
+        })
+      : setState({
+          events: state.events.sort(
+            (a, b) => new Date(b.start) - new Date(a.start)
+          ),
+        });
+    setTimeAsc(!timeAsc);
+  };
+
+  return {
+    filterEvents,
+    filterByCountry,
+    filterByCompetition,
+    sortByVolume,
+    sortByDate,
+    state,
+  };
 };
 
 export default useManageData;
