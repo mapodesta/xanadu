@@ -48,20 +48,27 @@ const Pagination = () => {
           </li>
         )}
 
-        {pageNumbers.map((pgNumber) => (
-          <li
-            key={pgNumber}
-            className={currentPage === pgNumber ? "pagination-active-page" : ""}
-          >
-            <a
-              onClick={() => handlePagination(actualFilters, pgNumber)}
-              className="page-link"
-              href="/#"
-            >
-              {pgNumber}
-            </a>
-          </li>
-        ))}
+        {pageNumbers.map((pgNumber) => {
+          if (pgNumber < 4 || pgNumber === total) {
+            return (
+              <li
+                key={pgNumber}
+                className={
+                  currentPage === pgNumber ? "pagination-active-page" : ""
+                }
+              >
+                <a
+                  onClick={() => handlePagination(actualFilters, pgNumber)}
+                  className="page-link"
+                  href="/#"
+                >
+                  {pgNumber}
+                </a>
+              </li>
+            );
+          }
+          return ".";
+        })}
         {currentPage !== total && total !== 0 && (
           <li className="page-item">
             <a className="page-link" onClick={nextPage} href="/#">
