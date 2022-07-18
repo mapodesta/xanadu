@@ -4,8 +4,18 @@ import axios from "axios";
 
 const useManageData = () => {
   const initialState = {
+    totalRecords: 0,
     events: [],
   };
+
+  const [actualFilters, setActualFilters] = useState({
+    id: 0,
+    sport: "",
+    country: "",
+    competition: "",
+  });
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [state, setState] = useState(initialState);
   const [asc, setAsc] = useState(true);
@@ -24,8 +34,8 @@ const useManageData = () => {
           },
         }
       );
-
       setState({
+        totalRecords: data.data.total,
         events: data.data.events,
       });
     };
@@ -33,31 +43,28 @@ const useManageData = () => {
     getAllEvents();
   }, []);
 
-  const filterEvents = async (sportId) => {
-    const data = await axios(
-      `/edge/rest/events?offset=0&per-page=20&after=${Math.floor(
-        Date.now() / 1000
-      )}&sport-ids=${sportId}&states=open%2Csuspended%2Cclosed%2Cgraded&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&exclude-mirrored-prices=false`,
-      {
-        headers: {
-          Accept: "application/json; charset=utf-8",
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      }
-    );
-    setState({
-      events: data.data.events,
-    });
-  };
+  const filterByCompetition = async (actualFilters, pag) => {
+    let tags = "";
+    let category = "";
+    let sprt = "";
+    if (actualFilters.competition !== "")
+      category = actualFilters?.competition?.replace(/ /g, "-").toLowerCase();
 
-  const filterByCountry = async (sportId, value) => {
-    const country = value.replace(/ /g, "-").toLowerCase();
+    if (actualFilters.country !== "") {
+      tags = `${actualFilters?.country?.toLowerCase()},${category}`;
+    } else {
+      tags = category;
+    }
+
+    if (actualFilters.id !== " ") {
+      sprt = `sport-ids=${actualFilters.id}&`;
+    }
     const data = await axios(
-      `/edge/rest/events?offset=0&per-page=100&after=${Math.floor(
+      `/edge/rest/events?offset=${pag}&per-page=20&after=${Math.floor(
         Date.now() / 1000
       )}&before=${
         Math.floor(Date.now() / 1000) + 500000
-      }&sport-ids=${sportId}&states=open%2Csuspended%2Cclosed%2Cgraded&tag-url-names=${country}&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&exclude-mirrored-prices=false`,
+      }&${sprt}states=open%2Csuspended%2Cclosed%2Cgraded&tag-url-names=${tags}&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&exclude-mirrored-prices=false`,
       {
         headers: {
           Accept: "application/json; charset=utf-8",
@@ -65,29 +72,11 @@ const useManageData = () => {
         },
       }
     );
-    setState({
-      events: data.data.events,
-    });
-  };
 
-  const filterByCompetition = async (sportId, actualFilters, value) => {
-    const category = value.replace(/ /g, "-").toLowerCase();
-    const data = await axios(
-      `/edge/rest/events?offset=0&per-page=100&after=${Math.floor(
-        Date.now() / 1000
-      )}&before=${
-        Math.floor(Date.now() / 1000) + 500000
-      }&sport-ids=${sportId}&states=open%2Csuspended%2Cclosed%2Cgraded&tag-url-names=${
-        (actualFilters.country.toLowerCase(), category)
-      }&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&exclude-mirrored-prices=false`,
-      {
-        headers: {
-          Accept: "application/json; charset=utf-8",
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      }
-    );
+    console.log(data);
+
     setState({
+      totalRecords: data.data.total,
       events: data.data.events,
     });
   };
@@ -95,9 +84,11 @@ const useManageData = () => {
   const sortByVolume = () => {
     asc
       ? setState({
+          ...state,
           events: state.events.sort((a, b) => a.volume - b.volume),
         })
       : setState({
+          ...state,
           events: state.events.sort((a, b) => b.volume - a.volume),
         });
     setAsc(!asc);
@@ -106,11 +97,13 @@ const useManageData = () => {
   const sortByDate = () => {
     timeAsc
       ? setState({
+          ...state,
           events: state.events.sort(
             (a, b) => new Date(a.start) - new Date(b.start)
           ),
         })
       : setState({
+          ...state,
           events: state.events.sort(
             (a, b) => new Date(b.start) - new Date(a.start)
           ),
@@ -119,11 +112,13 @@ const useManageData = () => {
   };
 
   return {
-    filterEvents,
-    filterByCountry,
     filterByCompetition,
     sortByVolume,
     sortByDate,
+    actualFilters,
+    setActualFilters,
+    currentPage,
+    setCurrentPage,
     state,
   };
 };

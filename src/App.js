@@ -6,6 +6,7 @@ import Search from "./components/Search";
 import Modal from "./components/Modal";
 import AppContext from "./context/AppContext";
 import useManageData from "./context/useManageData";
+import Pagination from "./components/Pagination";
 
 function App() {
   const state = useManageData();
@@ -20,6 +21,7 @@ function App() {
         {modalOpen && (
           <Modal setOpenModal={setModalOpen} modalData={modalData} />
         )}
+        <Pagination />
       </div>
     </AppContext.Provider>
   );

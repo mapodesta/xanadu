@@ -55,14 +55,16 @@ export default function Modal({ setOpenModal, modalData }) {
                       {" "}
                       <div>
                         <span className="main-table-bold">
-                          {runner.prices[0].odds}
+                          {runner?.prices[0]?.odds}
                         </span>
                         <br />
                         <span className="main-table-small-size">
                           {" "}
-                          €{runner.prices[0]["available-amount"].toFixed(
-                            2
-                          )}{" "}
+                          €
+                          {runner.prices[0] &&
+                          runner.prices[0]["available-amount"]
+                            ? runner.prices[0]["available-amount"].toFixed(2)
+                            : "- - - -"}{" "}
                         </span>
                       </div>
                     </td>
@@ -71,11 +73,15 @@ export default function Modal({ setOpenModal, modalData }) {
                       <div>
                         <span className="main-table-bold">
                           {" "}
-                          {runner.prices[1].odds}
+                          {runner?.prices[1]?.odds}
                         </span>
                         <br />
                         <span className="main-table-small-size">
-                          €{runner.prices[1]["available-amount"].toFixed(2)}{" "}
+                          €
+                          {runner.prices[1] &&
+                          runner.prices[1]["available-amount"]
+                            ? runner.prices[1]["available-amount"].toFixed(2)
+                            : "- - - -"}{" "}
                         </span>
                       </div>
                     </td>
