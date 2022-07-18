@@ -25,17 +25,22 @@ const Pagination = () => {
   const pageNumbers = [...Array(total + 1).keys()].slice(1);
 
   const nextPage = () => {
-    if (currentPage !== total) setCurrentPage(currentPage + 1);
-    handlePagination(actualFilters, currentPage);
+    if (currentPage !== total) {
+      setCurrentPage(currentPage + 1);
+      handlePagination(actualFilters, currentPage + 1);
+    }
   };
   const prevPage = () => {
-    if (currentPage !== 1) setCurrentPage(currentPage - 1);
-    handlePagination(actualFilters, currentPage);
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      handlePagination(actualFilters, currentPage - 1);
+    }
   };
+
   return (
-    <nav>
+    <nav className="pagination-nav">
       <ul className="pagination-ul">
-        {total > 1 && (
+        {currentPage > 1 && (
           <li className="page-item">
             <a className="page-link" onClick={prevPage} href="/#">
               Previous
@@ -57,7 +62,7 @@ const Pagination = () => {
             </a>
           </li>
         ))}
-        {currentPage !== total && (
+        {currentPage !== total && total !== 0 && (
           <li className="page-item">
             <a className="page-link" onClick={nextPage} href="/#">
               Next

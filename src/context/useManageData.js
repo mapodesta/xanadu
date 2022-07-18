@@ -56,7 +56,7 @@ const useManageData = () => {
       tags = category;
     }
 
-    if (actualFilters.id !== " ") {
+    if (actualFilters.id !== 0) {
       sprt = `sport-ids=${actualFilters.id}&`;
     }
     const data = await axios(
@@ -72,8 +72,6 @@ const useManageData = () => {
         },
       }
     );
-
-    console.log(data);
 
     setState({
       totalRecords: data.data.total,
