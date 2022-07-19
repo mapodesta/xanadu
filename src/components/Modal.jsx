@@ -15,26 +15,26 @@ export default function Modal({ setOpenModal, modalData }) {
         </div>
 
         <div className="title">
-          <b>{modalData.name}</b>
+          <b>{modalData?.name}</b>
         </div>
         <div className="modal-time-volume">
           <span>
             {" "}
-            {new Date(modalData.start).toLocaleDateString()}
+            {new Date(modalData?.start).toLocaleDateString()}
             <br />
-            {new Date(modalData.start).toLocaleTimeString([], {
+            {new Date(modalData?.start).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
             })}
           </span>
           <span>
-            Market Volume: <br /> €{modalData.volume.toFixed(2)}{" "}
+            Market Volume: <br /> €{modalData?.volume.toFixed(2)}{" "}
           </span>
         </div>
 
         <div className="modal-body-table">
           <div className="modal-marketname">
-            <b>{modalData.markets[0].name}</b>
+            <b>{modalData?.markets[0]?.name}</b>
           </div>
           <table className="modal-table">
             <tbody>
@@ -47,7 +47,7 @@ export default function Modal({ setOpenModal, modalData }) {
                   <b>Lay</b>
                 </td>
               </tr>
-              {modalData.markets[0].runners.map((runner) => {
+              {modalData?.markets[0]?.runners.map((runner) => {
                 return (
                   <tr className="modal-table-tr" key={runner.id}>
                     <td className="modal-table-td-name">{runner.name}</td>

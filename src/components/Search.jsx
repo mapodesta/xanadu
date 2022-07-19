@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import useGetData from "../hooks/useGetData";
 import AppContext from "../context/AppContext";
 import "../styles/search.css";
@@ -13,59 +13,81 @@ export default function Search() {
     setActualFilters,
     setCurrentPage,
   } = useContext(AppContext);
-  const [competitions, setCompetitions] = useState([]);
+  const [competitions, setCompetitions] = useState([
+    "Competitions",
+    "Competitions",
+  ]);
   const [countries, setCountries] = useState([]);
+  const [selectedSport, setSelectedSport] = useState("");
 
-  const handleSport = (e) => {
-    setCurrentPage(1);
-    const select = e.target;
-    const id = Number(select.children[select.selectedIndex].id);
-    setActualFilters({
-      ...actualFilters,
-      id,
-      sport: e.target.value,
-      country: "",
-      competition: "",
-    });
-    setCompetitions([]);
-    setCountries([]);
-    const sport = tree.find((element) => element.name === e.target.value);
-    sport["meta-tags"].forEach((sprt) => {
-      if (sprt.type === "COMPETITION") {
-        setCompetitions((competitions) => [...competitions, sprt.name]);
-      }
-      if (sprt.type === "COUNTRY") {
-        setCountries((countries) => [...countries, sprt.name]);
-      }
-    });
-  };
+  const handleSport = useCallback(
+    (e) => {
+      setSelectedSport(e.target.value);
+      setCurrentPage(1);
+      setCompetitions(["Competitions", "Competitions"]);
+      setCountries([]);
+      const select = e.target;
+      const id = Number(select.children[select.selectedIndex].id);
+      setActualFilters({
+        ...actualFilters,
+        id,
+        sport: e.target.value,
+        country: "",
+        competition: "",
+      });
+    },
+    [actualFilters, setActualFilters, setCurrentPage]
+  );
+
+  useEffect(() => {
+    const sport = tree?.find((element) => element.name === selectedSport);
+    sport &&
+      sport["meta-tags"].forEach((sprt) => {
+        if (sprt.type === "COMPETITION") {
+          setCompetitions((competitions) => [...competitions, sprt.name]);
+        }
+        if (sprt.type === "COUNTRY") {
+          setCountries((countries) => [...countries, sprt.name]);
+        }
+      });
+  }, [selectedSport, tree]);
 
   useEffect(() => {
     filterByCompetition(actualFilters, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actualFilters]);
 
-  const handleCountry = (e) => {
-    setCurrentPage(1);
-    setActualFilters({
-      ...actualFilters,
-      country: e.target.value,
-      competition: "",
-    });
+  const handleCountry = useCallback(
+    (e) => {
+      setCurrentPage(1);
+      setActualFilters({
+        ...actualFilters,
+        country: e.target.value,
+        competition: "",
+      });
 
-    setCompetitions([]);
-    const sport = tree.find((element) => element.name === actualFilters.sport);
-    const res = sport["meta-tags"].find((elem) => elem.name === e.target.value);
-    res["meta-tags"].forEach((tag) => {
-      if (tag.type === "COMPETITION" || tag.type === "LOCATION")
-        setCompetitions((competitions) => [...competitions, tag.name]);
-    });
-  };
+      setCompetitions(["Competitions", "Competitions"]);
+      const sport = tree.find(
+        (element) => element.name === actualFilters.sport
+      );
+      const res = sport["meta-tags"].find(
+        (elem) => elem.name === e.target.value
+      );
+      res["meta-tags"].forEach((tag) => {
+        if (tag.type === "COMPETITION" || tag.type === "LOCATION")
+          setCompetitions((competitions) => [...competitions, tag.name]);
+      });
+    },
+    [actualFilters, setActualFilters, setCurrentPage, tree]
+  );
 
-  const handleCompetition = (e) => {
-    setCurrentPage(1);
-    setActualFilters({ ...actualFilters, competition: e.target.value });
-  };
+  const handleCompetition = useCallback(
+    (e) => {
+      setCurrentPage(1);
+      setActualFilters({ ...actualFilters, competition: e.target.value });
+    },
+    [actualFilters, setActualFilters, setCurrentPage]
+  );
 
   return (
     <div className="search-content">
@@ -74,9 +96,11 @@ export default function Search() {
           name="sports"
           className="select-style"
           onChange={handleSport}
-          defaultValue=""
+          defaultValue="placeholder"
         >
-          <option hidden>Sport</option>
+          <option disabled value="placeholder">
+            Sport
+          </option>
           {tree.map(({ id, name, type }) =>
             type === "SPORT" ? (
               <option value={name} key={id} id={id}>
@@ -106,13 +130,16 @@ export default function Search() {
         <select
           name="competitions"
           className="select-style"
+          defaultValue={competitions[0]}
           onChange={handleCompetition}
         >
-          <option hidden value="">
-            Competition
-          </option>
           {competitions.map((competition, index) => (
-            <option value={competition} key={index}>
+            <option
+              value={competition}
+              key={index}
+              hidden={!index}
+              disabled={index === 1}
+            >
               {competition}
             </option>
           ))}

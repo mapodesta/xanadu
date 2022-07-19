@@ -63,7 +63,7 @@ const useManageData = () => {
       `/edge/rest/events?offset=${pag}&per-page=20&after=${Math.floor(
         Date.now() / 1000
       )}&before=${
-        Math.floor(Date.now() / 1000) + 500000
+        Math.floor(Date.now() / 1000) + 300000
       }&${sprt}states=open%2Csuspended%2Cclosed%2Cgraded&tag-url-names=${tags}&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&exclude-mirrored-prices=false`,
       {
         headers: {
