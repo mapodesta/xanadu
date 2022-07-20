@@ -15,6 +15,7 @@ export default function Main({ setModal, setModalData }) {
         <tr>
           <td className="main-table-td" />
           <td />
+
           <th colSpan={2}>Home Team</th>
           <th colSpan={2}>Draw</th>
           <th colSpan={2}>Away Team</th>
@@ -63,6 +64,53 @@ export default function Main({ setModal, setModalData }) {
                     </div>
                   </td>
                 ))}
+                {/* {evnt?.markets[0]?.runners?.map((runner, index) => {
+                  const back = runner?.prices?.find(
+                    (a, b) => a.side === "back"
+                  );
+                  const lay = runner?.prices?.find((a, b) => a.side === "lay");
+
+                  return (
+                    <>
+                      <td
+                        key={runner.id}
+                        className={
+                          index === 0 || index % 2 === 0
+                            ? "main-table-td-ltb"
+                            : "main-table-td-rd"
+                        }
+                      >
+                        {" "}
+                        <div>
+                          <span className="main-table-bold">{back?.odds}</span>
+                          <br />
+                          <span className="main-table-small-size">
+                            {" "}
+                            €{back?.["available-amount"].toFixed(2)}{" "}
+                          </span>
+                        </div>
+                      </td>
+                      <td
+                        key={index}
+                        className={
+                          index === 0 || index % 2 === 0
+                            ? "main-table-td-ltb"
+                            : "main-table-td-rd"
+                        }
+                      >
+                        {" "}
+                        <div>
+                          <span className="main-table-bold">{lay?.odds}</span>
+                          <br />
+                          <span className="main-table-small-size">
+                            {" "}
+                            €{lay?.["available-amount"].toFixed(2)}{" "}
+                          </span>
+                        </div>
+                      </td>
+                    </>
+                  );
+                })} */}
               </tr>
             )
         )}

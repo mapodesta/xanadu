@@ -26,7 +26,9 @@ const useManageData = () => {
       const data = await axios(
         `/edge/rest/events?offset=0&per-page=20&&after=${Math.floor(
           Date.now() / 1000
-        )}&states=open%2Csuspended%2Cclosed%2Cgraded&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&markets-limit=1&exclude-mirrored-prices=false`,
+        )}&before=${
+          Math.floor(Date.now() / 1000) + 300000
+        }&states=open%2Csuspended%2Cclosed%2Cgraded&exchange-type=back-lay&odds-type=DECIMAL&include-prices=false&price-depth=3&price-mode=expanded&include-event-participants=false&markets-limit=1&exclude-mirrored-prices=false`,
         {
           headers: {
             Accept: "application/json; charset=utf-8",

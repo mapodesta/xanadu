@@ -41,9 +41,28 @@ const Pagination = () => {
         {currentPage > 1 && (
           <li className="page-item">
             <a className="page-link" onClick={prevPage} href="/#">
-              Previous
+              Prev
             </a>
           </li>
+        )}
+        {currentPage > 2 && (
+          <>
+            <li
+              key={1}
+              className={
+                currentPage === 1 ? "pagination-active-page" : "pagination-page"
+              }
+            >
+              <a
+                onClick={() => handlePagination(actualFilters, 1)}
+                className="page-link"
+                href="/#"
+              >
+                {1}
+              </a>
+            </li>
+            <span>...</span>
+          </>
         )}
         {currentPage === 1 && total > 1 && (
           <>

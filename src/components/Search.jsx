@@ -17,7 +17,7 @@ export default function Search() {
     "Competitions",
     "Competitions",
   ]);
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState(["Countries", "Countries"]);
   const [selectedSport, setSelectedSport] = useState("");
 
   const handleSport = useCallback(
@@ -25,7 +25,7 @@ export default function Search() {
       setSelectedSport(e.target.value);
       setCurrentPage(1);
       setCompetitions(["Competitions", "Competitions"]);
-      setCountries([]);
+      setCountries(["Countries", "Countries"]);
       const select = e.target;
       const id = Number(select.children[select.selectedIndex].id);
       setActualFilters({
@@ -116,12 +116,16 @@ export default function Search() {
           name="country"
           className="select-style"
           onChange={handleCountry}
-          defaultValue=""
+          defaultValue={countries[0]}
           disabled={countries.length === 0 ? true : false}
         >
-          <option hidden>Country</option>
           {countries.map((country, index) => (
-            <option value={country} key={index}>
+            <option
+              value={country}
+              key={index}
+              hidden={!index}
+              disabled={index === 1}
+            >
               {country}
             </option>
           ))}
