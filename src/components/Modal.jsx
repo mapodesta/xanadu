@@ -40,10 +40,10 @@ export default function Modal({ setOpenModal, modalData }) {
             <tbody>
               <tr>
                 <td />
-                <td>
+                <td className="modal-table-td">
                   <b>Back</b>
                 </td>
-                <td>
+                <td className="modal-table-td">
                   <b>Lay</b>
                 </td>
               </tr>

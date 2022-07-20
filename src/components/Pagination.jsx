@@ -22,8 +22,6 @@ const Pagination = () => {
     }
   };
 
-  const pageNumbers = [...Array(total + 1).keys()].slice(1);
-
   const nextPage = () => {
     if (currentPage !== total) {
       setCurrentPage(currentPage + 1);
@@ -47,42 +45,105 @@ const Pagination = () => {
             </a>
           </li>
         )}
-        {pageNumbers.map(
-          (pgNumber) =>
-            pgNumber < 6 && (
-              <li
-                key={pgNumber}
-                className={
-                  currentPage === pgNumber
-                    ? "pagination-active-page"
-                    : "pagination-page"
-                }
+        {currentPage === 1 && total > 1 && (
+          <>
+            <li key={currentPage} className="pagination-active-page">
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage)}
+                className="page-link"
+                href="/#"
               >
-                <a
-                  onClick={() => handlePagination(actualFilters, pgNumber)}
-                  className="page-link"
-                  href="/#"
-                >
-                  {pgNumber}
-                </a>
-              </li>
-            )
+                {currentPage}
+              </a>
+            </li>
+            <li key={currentPage + 1} className="pagination-page">
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage + 1)}
+                className="page-link"
+                href="/#"
+              >
+                {currentPage + 1}
+              </a>
+            </li>
+          </>
         )}
-        ...
-        <li
-          key={total}
-          className={
-            currentPage === total ? "pagination-active-page" : "pagination-page"
-          }
-        >
-          <a
-            onClick={() => handlePagination(actualFilters, total)}
-            className="page-link"
-            href="/#"
-          >
-            {total}
-          </a>
-        </li>
+        {currentPage > 1 && currentPage < total && (
+          <>
+            <li key={currentPage - 1} className={"pagination-page"}>
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage - 1)}
+                className="page-link"
+                href="/#"
+              >
+                {currentPage - 1}
+              </a>
+            </li>
+            <li key={currentPage} className="pagination-active-page">
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage)}
+                className="page-link"
+                href="/#"
+              >
+                {currentPage}
+              </a>
+            </li>
+            <li key={currentPage + 1} className="pagination-page">
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage + 1)}
+                className="page-link"
+                href="/#"
+              >
+                {currentPage + 1}
+              </a>
+            </li>
+          </>
+        )}
+
+        {currentPage < total - 1 && (
+          <>
+            <span>...</span>
+            <li
+              key={total}
+              className={
+                currentPage === total
+                  ? "pagination-active-page"
+                  : "pagination-page"
+              }
+            >
+              <a
+                onClick={() => handlePagination(actualFilters, total)}
+                className="page-link"
+                href="/#"
+              >
+                {total}
+              </a>
+            </li>
+          </>
+        )}
+
+        {currentPage === total && total > 1 && (
+          <>
+            <li key={currentPage - 1} className={"pagination-page"}>
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage - 1)}
+                className="page-link"
+                href="/#"
+              >
+                {currentPage - 1}
+              </a>
+            </li>
+            <li key={currentPage} className="pagination-active-page">
+              <a
+                onClick={() => handlePagination(actualFilters, currentPage)}
+                className="page-link"
+                href="/#"
+              >
+                {currentPage}
+              </a>
+            </li>
+          </>
+        )}
+
         {currentPage !== total && total !== 0 && (
           <li className="page-item">
             <a className="page-link" onClick={nextPage} href="/#">

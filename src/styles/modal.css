@@ -48,6 +48,10 @@
   width: 100%;
 }
 
+.modal-table-td {
+  text-align: center;
+}
+
 .modal-table-td-name {
   width: 30%;
   border: 1px solid #f1f1f1;
