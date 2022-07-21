@@ -6,8 +6,12 @@ export default function Header() {
 
   return (
     <div className="header-content">
-      <span>Current Location :{location.country} </span>
-      <span>Currency :{location.currency} </span>
+      <span>
+        Current Location : <b>{location?.country} </b>
+      </span>
+      <span>
+        Currency : <b>{location?.currency} </b>
+      </span>
     </div>
   );
 }

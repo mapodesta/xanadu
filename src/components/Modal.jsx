@@ -48,40 +48,29 @@ export default function Modal({ setOpenModal, modalData }) {
                 </td>
               </tr>
               {modalData?.markets[0]?.runners.map((runner) => {
+                const back = runner?.prices?.find((a) => a.side === "back");
+                const lay = runner?.prices?.find((a) => a.side === "lay");
                 return (
                   <tr className="modal-table-tr" key={runner.id}>
                     <td className="modal-table-td-name">{runner.name}</td>
                     <td className="main-table-td-rd">
                       {" "}
                       <div>
-                        <span className="main-table-bold">
-                          {runner?.prices[0]?.odds}
-                        </span>
+                        <span className="main-table-bold">{back.odds}</span>
                         <br />
                         <span className="main-table-small-size">
                           {" "}
-                          €
-                          {runner.prices[0] &&
-                          runner.prices[0]["available-amount"]
-                            ? runner.prices[0]["available-amount"].toFixed(2)
-                            : "- - - -"}{" "}
+                          €{back?.["available-amount"].toFixed(2)}
                         </span>
                       </div>
                     </td>
                     <td className="main-table-td-ltb">
                       {" "}
                       <div>
-                        <span className="main-table-bold">
-                          {" "}
-                          {runner?.prices[1]?.odds}
-                        </span>
+                        <span className="main-table-bold"> {lay?.odds}</span>
                         <br />
                         <span className="main-table-small-size">
-                          €
-                          {runner.prices[1] &&
-                          runner.prices[1]["available-amount"]
-                            ? runner.prices[1]["available-amount"].toFixed(2)
-                            : "- - - -"}{" "}
+                          €{lay?.["available-amount"].toFixed(2)}
                         </span>
                       </div>
                     </td>

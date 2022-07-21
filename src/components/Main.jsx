@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import AppContext from "../context/AppContext";
 import "../styles/main.css";
 export default function Main({ setModal, setModalData }) {
@@ -27,7 +27,11 @@ export default function Main({ setModal, setModalData }) {
           const newRunners = evnt?.markets[0]?.runners.slice(0, 3);
           if (evnt.status !== "closed") {
             return (
-              <tr className="main-table-tr" key={evnt.id}>
+              <tr
+                className="main-table-tr"
+                key={evnt.id}
+                onClick={() => handleData(evnt)}
+              >
                 <td className="main-table-td">
                   <div className="main-table-date">
                     <span className="main-table-bold">
@@ -42,7 +46,7 @@ export default function Main({ setModal, setModalData }) {
                     </span>
                   </div>
                 </td>
-                <td className="main-table-td" onClick={() => handleData(evnt)}>
+                <td className="main-table-td">
                   <div className="td-flex">
                     <b>{evnt.name}</b>
                     <span>{evnt.volume.toFixed(2)}</span>
@@ -53,10 +57,10 @@ export default function Main({ setModal, setModalData }) {
                   newRunners.map((runner, index) => {
                     const back = runner?.prices?.find((a) => a.side === "back");
                     const lay = runner?.prices?.find((a) => a.side === "lay");
+
                     return (
-                      <>
+                      <Fragment key={runner.id}>
                         <td
-                          key={runner.id}
                           className={
                             index === 0 || index % 2 === 0
                               ? "main-table-td-ltb"
@@ -76,7 +80,6 @@ export default function Main({ setModal, setModalData }) {
                           </div>
                         </td>
                         <td
-                          key={index}
                           className={
                             index === 0 || index % 2 === 0
                               ? "main-table-td-ltb"
@@ -93,7 +96,7 @@ export default function Main({ setModal, setModalData }) {
                             </span>
                           </div>
                         </td>
-                      </>
+                      </Fragment>
                     );
                   })}
               </tr>
