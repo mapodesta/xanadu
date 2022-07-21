@@ -17,12 +17,16 @@ export default function Main({ setModal, setModalData }) {
           <td />
 
           <th colSpan={2}>Home Team</th>
-          <th colSpan={2}>Draw</th>
           <th colSpan={2}>Away Team</th>
+
+          {state?.events?.[0]?.markets[0].runners.length === 3 && (
+            <th colSpan={2}>Draw</th>
+          )}
         </tr>
-        {state?.events?.map(
-          (evnt) =>
-            evnt.status !== "closed" && (
+        {state?.events?.map((evnt) => {
+          const newRunners = evnt?.markets[0]?.runners.slice(0, 3);
+          if (evnt.status !== "closed") {
+            return (
               <tr className="main-table-tr" key={evnt.id}>
                 <td className="main-table-td">
                   <div className="main-table-date">
@@ -44,76 +48,59 @@ export default function Main({ setModal, setModalData }) {
                     <span>{evnt.volume.toFixed(2)}</span>
                   </div>
                 </td>
-                {evnt?.markets[0]?.runners[0]?.prices.map((price, index) => (
-                  <td
-                    key={index}
-                    className={
-                      index === 0 || index % 2 === 0
-                        ? "main-table-td-ltb"
-                        : "main-table-td-rd"
-                    }
-                  >
-                    {" "}
-                    <div>
-                      <span className="main-table-bold">{price.odds}</span>
-                      <br />
-                      <span className="main-table-small-size">
-                        {" "}
-                        €{price["available-amount"].toFixed(2)}{" "}
-                      </span>
-                    </div>
-                  </td>
-                ))}
-                {/* {evnt?.markets[0]?.runners?.map((runner, index) => {
-                  const back = runner?.prices?.find(
-                    (a, b) => a.side === "back"
-                  );
-                  const lay = runner?.prices?.find((a, b) => a.side === "lay");
 
-                  return (
-                    <>
-                      <td
-                        key={runner.id}
-                        className={
-                          index === 0 || index % 2 === 0
-                            ? "main-table-td-ltb"
-                            : "main-table-td-rd"
-                        }
-                      >
-                        {" "}
-                        <div>
-                          <span className="main-table-bold">{back?.odds}</span>
-                          <br />
-                          <span className="main-table-small-size">
-                            {" "}
-                            €{back?.["available-amount"].toFixed(2)}{" "}
-                          </span>
-                        </div>
-                      </td>
-                      <td
-                        key={index}
-                        className={
-                          index === 0 || index % 2 === 0
-                            ? "main-table-td-ltb"
-                            : "main-table-td-rd"
-                        }
-                      >
-                        {" "}
-                        <div>
-                          <span className="main-table-bold">{lay?.odds}</span>
-                          <br />
-                          <span className="main-table-small-size">
-                            {" "}
-                            €{lay?.["available-amount"].toFixed(2)}{" "}
-                          </span>
-                        </div>
-                      </td>
-                    </>
-                  );
-                })} */}
+                {newRunners &&
+                  newRunners.map((runner, index) => {
+                    const back = runner?.prices?.find((a) => a.side === "back");
+                    const lay = runner?.prices?.find((a) => a.side === "lay");
+                    return (
+                      <>
+                        <td
+                          key={runner.id}
+                          className={
+                            index === 0 || index % 2 === 0
+                              ? "main-table-td-ltb"
+                              : "main-table-td-rd"
+                          }
+                        >
+                          {" "}
+                          <div>
+                            <span className="main-table-bold">
+                              {back?.odds}
+                            </span>
+                            <br />
+                            <span className="main-table-small-size">
+                              {" "}
+                              €{back?.["available-amount"].toFixed(2)}{" "}
+                            </span>
+                          </div>
+                        </td>
+                        <td
+                          key={index}
+                          className={
+                            index === 0 || index % 2 === 0
+                              ? "main-table-td-ltb"
+                              : "main-table-td-rd"
+                          }
+                        >
+                          {" "}
+                          <div>
+                            <span className="main-table-bold">{lay?.odds}</span>
+                            <br />
+                            <span className="main-table-small-size">
+                              {" "}
+                              €{lay?.["available-amount"].toFixed(2)}{" "}
+                            </span>
+                          </div>
+                        </td>
+                      </>
+                    );
+                  })}
               </tr>
-            )
-        )}
+            );
+          }
+          return null;
+        })}
       </tbody>
     </table>
   );
