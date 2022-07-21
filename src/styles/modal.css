@@ -12,14 +12,13 @@
 
 .modalContainer {
   width: 40%;
-  height: 75vh;
+  height: auto;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
-  overflow-y: auto;
 }
 
 .modalContainer .title {
@@ -60,6 +59,9 @@
 
 .modal-body-table {
   margin-top: 5%;
+  height: 50%;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 @media (max-width: 500px) {
