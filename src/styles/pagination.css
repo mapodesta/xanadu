@@ -4,6 +4,8 @@
   align-items: center;
   list-style: none;
   text-decoration: none;
+  padding: 0;
+  font-size: 1rem;
 }
 .page-link {
   display: flex;

@@ -60,13 +60,7 @@ export default function Main({ setModal, setModalData }) {
 
                     return (
                       <Fragment key={runner.id}>
-                        <td
-                          className={
-                            index === 0 || index % 2 === 0
-                              ? "main-table-td-ltb"
-                              : "main-table-td-rd"
-                          }
-                        >
+                        <td className={"main-table-td-rd"}>
                           {" "}
                           <div>
                             <span className="main-table-bold">
@@ -79,13 +73,7 @@ export default function Main({ setModal, setModalData }) {
                             </span>
                           </div>
                         </td>
-                        <td
-                          className={
-                            index === 0 || index % 2 === 0
-                              ? "main-table-td-ltb"
-                              : "main-table-td-rd"
-                          }
-                        >
+                        <td className={"main-table-td-ltb"}>
                           {" "}
                           <div>
                             <span className="main-table-bold">{lay?.odds}</span>
