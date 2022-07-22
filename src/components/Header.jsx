@@ -1,7 +1,7 @@
 import React from "react";
 import useLocation from "../hooks/useLocation";
 import "../styles/header.css";
-export default function Header() {
+function Header() {
   const { location } = useLocation();
 
   return (
@@ -15,3 +15,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default React.memo(Header);
